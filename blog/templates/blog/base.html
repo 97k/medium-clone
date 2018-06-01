@@ -1,10 +1,79 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title></title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- medium-editor library -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <!-- fonts -->
+
+    <link href="https://fonts.googleapis.com/css?family=Exo|Montserrat" rel="stylesheet">
+
   </head>
-  <body>
+  <body class="loader">
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light techfont custom-navbar">
+        <div class="container">
+          <ul class="navbar-nav">
+
+
+              <li> <a class="navbar-brand bigbrand" href="{% url 'post_list' %}">My Blog</a> </li>
+              <li> <a class="nav-link "href="{% url 'about'%}">About</a> </li>
+              <li> <a class="nav-link"href="https://www.github.com/aditya98ak" >Github</a> </li>
+              <li> <a class="nav-link"href="https://linkedin.com/in/adityakaushik01/">LinkedIn</a> </li>
+          </ul>
+
+          <ul class="navbar-nav ml-auto">
+
+            {% if user.is_authenticated %}
+            <li>
+              <a class="nav-link"href="{% url 'post_new' %}">New Post</a>
+            </li>
+
+            <li>
+              <a class="nav-link"href="{% url 'post_draft_list' %}">Drafts</a>
+            </li>
+
+            <li>
+              <a class="nav-link"href="{% url 'logout' %}">Logout</a>
+            </li>
+
+            <li> <a class="nav-link">Welcome {{user.username}}</a> </li>
+            {%else%}
+            <li>
+              <a class="nav-link"href="{% url 'login' %}"> <span class="glyphicon glyphicon-user">Login</span> </a>
+            </li>
+
+            {% endif %}
+
+          </ul>
+        </div>
+      </nav>
+      <!-- Content Block -->
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="blog_post">
+            {% block content %}
+            {% endblock %}
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
 
   </body>
 </html>
